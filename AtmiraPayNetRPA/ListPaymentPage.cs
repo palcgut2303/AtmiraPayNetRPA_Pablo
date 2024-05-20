@@ -14,6 +14,7 @@ namespace AtmiraPayNetRPA
         public ListPaymentPage(IWebDriver driver)
         {
             this.driver = driver;
+
         }
 
         IWebElement btnHomeListPayment => driver.FindElement(By.Id("viewPayment"));
@@ -22,10 +23,5 @@ namespace AtmiraPayNetRPA
         {
             btnHomeListPayment.Click();
         }
-
-
-
-
-
     }
 }

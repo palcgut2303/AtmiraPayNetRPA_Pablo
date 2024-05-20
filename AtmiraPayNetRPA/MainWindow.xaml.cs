@@ -1,5 +1,6 @@
 ﻿using OpenQA.Selenium;
 using System.Net;
+using System.Net.Http;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -38,52 +39,47 @@ namespace AtmiraPayNetRPA
 
         }
 
-        private void TestLoginRegister(object sender, RoutedEventArgs e)
+        private void TestData(object sender, RoutedEventArgs e)
         {
-            //REGISTER
-            //string username = txtUsername.Text;
-            //string emailRegister = txtEmailRegister.Text;
-            //string passwordRegister = txtPasswordRegister.Text;
-            //string fullName = txtFullname.Text;
-            //DateTime birthdate = calendarBirthdate.SelectedDate.Value;
 
-            //LOGIN
+            //TXT DEL LOGIN
             string emailLogin = txtEmailLogin.Text;
             string passwordLogin = txtPasswordLogin.Text;
 
 
+            //TXT DEL PAGO
+            string IBANBankOrigin = txtIBANOrigin.Text;
+            string bankNameOrigin = txtBankNameOrigin.Text;
+            string countryOrigin = txtCountryOrigin.Text;
+
+            string IBANBankDestination = txtIBANDestination.Text;
+            string bankNameDestination = txtBankNameDestination.Text;
+            string countryDestination = txtCountryDestination.Text;
+
+            string IBANBankInter = txtIBANInter.Text;
+            string bankNameInter = txtBankNameInter.Text;
+
+            string CP = txtCp.Text;
+            string Street = txtStreet.Text;
+            string NumberStreet = txtNumberStreet.Text;
+            string PayAmount = txtPayAmount.Text;
+
+
+
             _webDriver = new OpenQA.Selenium.Chrome.ChromeDriver();
             _webDriver.Navigate().GoToUrl("http://localhost:5058/");
+            _webDriver.Manage().Timeouts().ImplicitWait = System.TimeSpan.FromSeconds(8);
+
             _webDriver.Manage().Window.Maximize();
 
-            Thread.Sleep(6000);
-
-
-
-            //webElement = _webDriver.FindElement(By.Id("username"));
-            //webElement.SendKeys(username);
-
-            //webElement = _webDriver.FindElement(By.Id("fullname"));
-            //webElement.SendKeys(fullName);
-
-            //webElement = _webDriver.FindElement(By.Id("emailRegister"));
-            //webElement.SendKeys(emailRegister);
-
-            //webElement = _webDriver.FindElement(By.Id("passwordRegister"));
-            //webElement.SendKeys(passwordRegister);
-
-            //webElement = _webDriver.FindElement(By.Id("birthdate"));
-            //webElement.SendKeys(birthdate.ToString("dd-MM-yyyy"));
-
-            //webElement = _webDriver.FindElement(By.Id("btnRegister"));
-            //webElement.Click();
+           
 
             //LOGIN
             LoginPage loginPage = new LoginPage(_webDriver);
             loginPage.ClickLogin();
             loginPage.Login(emailLogin, passwordLogin);
             
-            Thread.Sleep(6000);
+            
 
             ListPaymentPage listPaymentPage = new ListPaymentPage(_webDriver);
             listPaymentPage.ClickHomebtn();
@@ -91,9 +87,51 @@ namespace AtmiraPayNetRPA
             CreatePaymentPage createPaymentPage = new CreatePaymentPage(_webDriver);
             createPaymentPage.ClickCreatePayment();
 
-            createPaymentPage.CreatePayment("ES6621000418401234567891", "Santander", "Spain", "28001", "Calle Serrano", "1", "100", "ES6621000418401234567891", "Santander", "Spain", "ES6621000418401234567891", "Santander");
-            createPaymentPage.ClickGenerar();
+            
 
+
+            createPaymentPage.CreatePayment(IBANBankOrigin, bankNameOrigin, countryOrigin, CP, Street, NumberStreet, PayAmount, IBANBankDestination, bankNameDestination, countryDestination, IBANBankInter, bankNameInter);
+
+            ComboBoxItem selectedItem = comboBoxTypeOperation.SelectedItem as ComboBoxItem;
+
+            string tipoOperacion =  selectedItem!.Content.ToString()!;
+
+            
+
+            if (tipoOperacion == "GENERAR")
+            {
+               createPaymentPage.ClickGenerar();
+            }
+            else
+            {
+                createPaymentPage.ClickBorrador();
+            }
+
+
+        }
+
+        public async Task CheckApiAvailability()
+        {
+            using (var client = new HttpClient())
+            {
+                try
+                {
+                    var response = await client.GetAsync("https://restcountries.com/v3.1/all?fields=name,currencies,cca2");
+                    if (response.IsSuccessStatusCode)
+                    {
+                        Console.WriteLine("API is accessible");
+                    }
+                    else
+                    {
+                        Console.WriteLine("API is not accessible");
+                    }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("API is not accessible");
+                }
+                
+            }
         }
     }
 }

@@ -3,24 +3,34 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Net.Http;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using OpenQA.Selenium.Support.UI;
+
 
 namespace AtmiraPayNetRPA
 {
     public class CreatePaymentPage
     {
         private readonly IWebDriver driver;
+        private WebDriverWait wait;
 
         public CreatePaymentPage(IWebDriver driver)
         {
             this.driver = driver;
+
+            this.driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(15); 
+
+
         }
+
 
         IWebElement btnCreatePayment => driver.FindElement(By.Id("createPayment"));
         IWebElement OriginAccountIBAN => driver.FindElement(By.Id("OriginAccountIBAN"));
         IWebElement OriginBankName => driver.FindElement(By.Id("OriginBankName"));
+
         IWebElement OriginCountryBank => driver.FindElement(By.Id("OriginCountryBank"));
         IWebElement CP => driver.FindElement(By.Id("CP"));
         IWebElement Street => driver.FindElement(By.Id("Street"));
@@ -40,10 +50,17 @@ namespace AtmiraPayNetRPA
             btnCreatePayment.Click();
         }
 
+
         public void CreatePayment(string OriginAccountIBAN, string OriginBankName, string OriginCountryBank, string CP, string Street, string NumberStreet, string PayAmount, string DestinationAccountIBAN, string DestinationBankName, string DestinationCountryBank, string InterBankAccountIBAN, string InterBankName)
         {
+            Thread.Sleep(20000);
+
             this.OriginAccountIBAN.SendKeys(OriginAccountIBAN);
             this.OriginBankName.SendKeys(OriginBankName);
+
+            var selectElement = new SelectElement(this.OriginCountryBank);
+            selectElement.SelectByText(OriginCountryBank);
+
             this.OriginCountryBank.SendKeys(OriginCountryBank);
             this.CP.SendKeys(CP);
             this.Street.SendKeys(Street);
@@ -53,8 +70,14 @@ namespace AtmiraPayNetRPA
             this.DestinationBankName.SendKeys(DestinationBankName);
             this.DestinationCountryBank.SendKeys(DestinationCountryBank);
 
-            if(InterBankAccountIBAN != null && InterBankName != null)
+            
+
+            var selectElement2 = new SelectElement(this.DestinationCountryBank);
+            selectElement2.SelectByText(DestinationCountryBank);
+
+            if (InterBankAccountIBAN != null && InterBankName != null)
             {
+
                 this.InterBankAccountIBAN.SendKeys(InterBankAccountIBAN);
                 this.InterBankName.SendKeys(InterBankName);
             }
