@@ -53,7 +53,7 @@ namespace AtmiraPayNetRPA
 
         public void CreatePayment(string OriginAccountIBAN, string OriginBankName, string OriginCountryBank, string CP, string Street, string NumberStreet, string PayAmount, string DestinationAccountIBAN, string DestinationBankName, string DestinationCountryBank, string InterBankAccountIBAN, string InterBankName)
         {
-            Thread.Sleep(20000);
+            Thread.Sleep(5000);
 
             this.OriginAccountIBAN.SendKeys(OriginAccountIBAN);
             this.OriginBankName.SendKeys(OriginBankName);
@@ -75,7 +75,7 @@ namespace AtmiraPayNetRPA
             var selectElement2 = new SelectElement(this.DestinationCountryBank);
             selectElement2.SelectByText(DestinationCountryBank);
 
-            if (InterBankAccountIBAN != null && InterBankName != null)
+            if ((InterBankAccountIBAN != "" && InterBankName != ""))
             {
 
                 this.InterBankAccountIBAN.SendKeys(InterBankAccountIBAN);

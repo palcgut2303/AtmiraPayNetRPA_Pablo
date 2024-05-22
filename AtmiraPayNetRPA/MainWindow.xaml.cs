@@ -56,10 +56,12 @@ namespace AtmiraPayNetRPA
             string bankNameDestination = txtBankNameDestination.Text;
             string countryDestination = txtCountryDestination.Text;
 
-            string IBANBankInter = txtIBANInter.Text;
+            
+
+            string? IBANBankInter = txtIBANInter.Text;
             string bankNameInter = txtBankNameInter.Text;
 
-            string CP = txtCp.Text;
+            string CP = txtCp.Text;              
             string Street = txtStreet.Text;
             string NumberStreet = txtNumberStreet.Text;
             string PayAmount = txtPayAmount.Text;
@@ -68,11 +70,10 @@ namespace AtmiraPayNetRPA
 
             _webDriver = new OpenQA.Selenium.Chrome.ChromeDriver();
             _webDriver.Navigate().GoToUrl("http://localhost:5058/");
+
             _webDriver.Manage().Timeouts().ImplicitWait = System.TimeSpan.FromSeconds(8);
 
             _webDriver.Manage().Window.Maximize();
-
-           
 
             //LOGIN
             LoginPage loginPage = new LoginPage(_webDriver);
@@ -110,28 +111,5 @@ namespace AtmiraPayNetRPA
 
         }
 
-        public async Task CheckApiAvailability()
-        {
-            using (var client = new HttpClient())
-            {
-                try
-                {
-                    var response = await client.GetAsync("https://restcountries.com/v3.1/all?fields=name,currencies,cca2");
-                    if (response.IsSuccessStatusCode)
-                    {
-                        Console.WriteLine("API is accessible");
-                    }
-                    else
-                    {
-                        Console.WriteLine("API is not accessible");
-                    }
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine("API is not accessible");
-                }
-                
-            }
-        }
     }
 }
