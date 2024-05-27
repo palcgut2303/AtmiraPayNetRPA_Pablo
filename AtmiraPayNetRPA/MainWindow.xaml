@@ -59,6 +59,12 @@
         <Rectangle HorizontalAlignment="Left" Height="375" Margin="318,66,0,0" Stroke="Black" VerticalAlignment="Top" Width="207"/>
         <Rectangle HorizontalAlignment="Left" Height="295" Margin="830,67,0,0" Stroke="Black" VerticalAlignment="Top" Width="216" RenderTransformOrigin="0.478,0.524"/>
         <Label Content="Inicio de Sesión" HorizontalAlignment="Left" Margin="114,67,0,0" VerticalAlignment="Top" Width="172" FontSize="22" FontWeight="Bold"/>
+        <Label Name="ErrorLabel" Content="An error occurred!" Foreground="Red" Visibility="Collapsed"   HorizontalAlignment="Left" VerticalAlignment="Top" Margin="147,359,0,0"/>
+        <ScrollViewer   HorizontalScrollBarVisibility="Auto" Margin="114,402,824,192" Width="183" Height="123">
+            <TextBlock Name="ErrorTextBlock" Foreground="Red" Visibility="Collapsed"  TextWrapping="Wrap" Text="TextBlock" Height="269" Width="173"/>
+        </ScrollViewer>
+        <Button Content="Carpeta Destino PDF" HorizontalAlignment="Left" Margin="114,604,0,0" VerticalAlignment="Top" Height="40" Width="175" FontSize="18" Click="Button_Click"/>
+        <TextBlock x:Name="txtPathFolder" HorizontalAlignment="Left" Margin="289,612,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="32" Width="371" FontSize="12" RenderTransformOrigin="0.554,-0.17"/>
 
 
     </Grid>
