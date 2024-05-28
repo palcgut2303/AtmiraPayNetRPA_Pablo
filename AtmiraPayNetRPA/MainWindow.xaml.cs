@@ -1,4 +1,6 @@
-﻿using OpenQA.Selenium;
+﻿using AtmiraPayNetRPA.POM;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
 using System.Net;
 using System.Net.Http;
 using System.Text;
@@ -20,11 +22,16 @@ namespace AtmiraPayNetRPA
     public partial class MainWindow : Window
     {
         private IWebDriver _webDriver;
-
+        private WebDriverWait wait;
         public MainWindow()
         {
             InitializeComponent();
+            
         }
+
+        IWebElement errorOcurred => wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.XPath("//*[@id=\"app\"]/div/main/article/form/div[1]/p")));
+        IWebElement errorOcurredSweetAlert => wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.XPath("//*[@id=\"swal2-html-container\"]")));
+
 
 
 
@@ -59,10 +66,12 @@ namespace AtmiraPayNetRPA
 
                 _webDriver = new OpenQA.Selenium.Chrome.ChromeDriver();
                 _webDriver.Navigate().GoToUrl("http://localhost:5058/");
-
+               
                 _webDriver.Manage().Timeouts().ImplicitWait = System.TimeSpan.FromSeconds(5);
 
                 _webDriver.Manage().Window.Maximize();
+
+                wait = new WebDriverWait(_webDriver, new TimeSpan(0, 0, 5));
 
                 //LOGIN
                 LoginPage loginPage = new LoginPage(_webDriver);
@@ -89,30 +98,25 @@ namespace AtmiraPayNetRPA
                 if (tipoOperacion == "GENERAR")
                 {
                     createPaymentPage.ClickGenerar();
+                    ShowSuccess(errorOcurredSweetAlert.Text);
                 }
                 else
                 {
                     createPaymentPage.ClickBorrador();
+                    ShowSuccess(errorOcurredSweetAlert.Text);
                 }
-            }
-            catch (NoSuchElementException ex)
-            {
-                // Manejar la excepción si no se encuentra el elemento
-                ShowError("Error: El elemento no se encontró. ", ex);
-            }
-            catch (ElementClickInterceptedException ex)
-            {
-                // Manejar la excepción si el elemento no es clickeable
-                ShowError("Error: El elemento no es clickeable. " ,ex);
             }
             catch (Exception ex)
             {
-                ShowError("Error: Ocurrió un error inesperado. ", ex);
+                try
+                {
+                    ShowError(errorOcurred.Text, ex);
+                }
+                catch (Exception ex2)
+                {
+                    ShowError(errorOcurredSweetAlert.Text, ex);
+                }
             }
-
-
-
-
         }
 
         private void ShowError(string message, Exception ex)
@@ -128,25 +132,47 @@ namespace AtmiraPayNetRPA
             ErrorTextBlock.Visibility = Visibility.Visible;
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void ShowSuccess(string message)
         {
-            Microsoft.Win32.OpenFolderDialog dialog = new();
+            // Mostrar el mensaje de error en un MessageBox
+            MessageBox.Show(message, "Information", MessageBoxButton.OK, MessageBoxImage.Information);
 
-            dialog.Multiselect = false;
-            dialog.Title = "Select a folder";
 
-            // Show open folder dialog box
-            bool? result = dialog.ShowDialog();
+            // Mostrar el mensaje de error en el TextBlock
+            SuccessTextBlock.Text = $"{message}\n";
 
-            // Process open folder dialog box results
-            if (result == true)
-            {
-                // Get the selected folder
-                string fullPathToFolder = dialog.FolderName;
-                string folderNameOnly = dialog.SafeFolderName;
+            SuccesLabel.Visibility = Visibility.Visible;
+            SuccessTextBlock.Visibility = Visibility.Visible;
+        }
 
-                txtPathFolder.Text = fullPathToFolder;
-            }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            //TXT DEL LOGIN
+            string emailLogin = txtEmailLogin.Text;
+            string passwordLogin = txtPasswordLogin.Text;
+
+            _webDriver = new OpenQA.Selenium.Chrome.ChromeDriver();
+            _webDriver.Navigate().GoToUrl("http://localhost:5058/");
+
+            _webDriver.Manage().Timeouts().ImplicitWait = System.TimeSpan.FromSeconds(5);
+
+            _webDriver.Manage().Window.Maximize();
+
+            wait = new WebDriverWait(_webDriver, new TimeSpan(0, 0, 5));
+
+            //LOGIN
+            LoginPage loginPage = new LoginPage(_webDriver);
+            loginPage.ClickLogin();
+            loginPage.Login(emailLogin, passwordLogin);
+
+            ListPaymentPage listPaymentPage = new ListPaymentPage(_webDriver);
+            listPaymentPage.ClickHomebtn();
+
+            ListPaymentView listPaymentPage2 = new(_webDriver);
+            listPaymentPage2.Show();
+            Close();
+
         }
     }
 }

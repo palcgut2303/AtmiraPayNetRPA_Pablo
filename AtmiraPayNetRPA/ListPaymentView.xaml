@@ -1,0 +1,29 @@
+﻿<Window x:Class="AtmiraPayNetRPA.ListPaymentView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AtmiraPayNetRPA"
+        mc:Ignorable="d"
+        Title="ListPaymentView" Height="529" Width="813">
+    <Grid>
+        <Label Content="Listado de Pagos realizados" HorizontalAlignment="Center" Margin="0,25,0,0" VerticalAlignment="Top" FontSize="20"/>
+
+        <DataGrid Name="dataGrid" AutoGenerateColumns="False" ItemsSource="{Binding TableData}" Margin="50,93,50,143">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="BancoOrigen" Binding="{Binding BancoOrigen}" />
+                <DataGridTextColumn Header="BancoBeneficiario" Binding="{Binding BancoBeneficiario}" />
+                <DataGridTextColumn Header="Cantidad" Binding="{Binding Cantidad}" />
+                <DataGridTextColumn Header="Divisa" Binding="{Binding Divisa}" />
+                <DataGridTextColumn Header="Estado" Binding="{Binding Estado}" />
+                <DataGridTemplateColumn Header="Download">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Download PDF" Click="Button_Click(Binding btn) " />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Window>

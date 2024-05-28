@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using OpenQA.Selenium.Support.UI;
 using OpenQA.Selenium.Interactions;
 
-namespace AtmiraPayNetRPA
+namespace AtmiraPayNetRPA.POM
 {
     public class CreatePaymentPage
     {
@@ -19,11 +19,11 @@ namespace AtmiraPayNetRPA
         private Actions actions;
         public CreatePaymentPage(IWebDriver driver)
         {
-           _driver = driver;
+            _driver = driver;
 
             _driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
 
-             wait = new WebDriverWait(_driver, new TimeSpan(0, 0, 5));
+            wait = new WebDriverWait(_driver, new TimeSpan(0, 0, 5));
             actions = new Actions(_driver);
         }
 
@@ -58,52 +58,63 @@ namespace AtmiraPayNetRPA
 
         public void CreatePayment(string OriginAccountIBAN, string OriginBankName, string OriginCountryBank, string CP, string Street, string NumberStreet, string PayAmount, string DestinationAccountIBAN, string DestinationBankName, string DestinationCountryBank, string InterBankAccountIBAN, string InterBankName)
         {
-                this.OriginAccountIBAN.SendKeys(OriginAccountIBAN);
-                this.OriginBankName.SendKeys(OriginBankName);
+            this.OriginAccountIBAN.SendKeys(OriginAccountIBAN);
+            this.OriginBankName.SendKeys(OriginBankName);
 
-                var selectElement = new SelectElement(this.OriginCountryBank);
-                selectElement.SelectByText(OriginCountryBank);
+            var selectElement = new SelectElement(this.OriginCountryBank);
+            selectElement.SelectByText(OriginCountryBank);
 
-                this.OriginCountryBank.SendKeys(OriginCountryBank);
-                this.CP.SendKeys(CP);
-                this.Street.SendKeys(Street);
-                this.NumberStreet.SendKeys(NumberStreet);
-                this.PayAmount.SendKeys(PayAmount);
-                this.DestinationAccountIBAN.SendKeys(DestinationAccountIBAN);
-                this.DestinationBankName.SendKeys(DestinationBankName);
-                this.DestinationCountryBank.SendKeys(DestinationCountryBank);
+            this.OriginCountryBank.SendKeys(OriginCountryBank);
+            this.CP.SendKeys(CP);
+            this.Street.SendKeys(Street);
+            this.NumberStreet.SendKeys(NumberStreet);
+            this.PayAmount.SendKeys(PayAmount);
+            this.DestinationAccountIBAN.SendKeys(DestinationAccountIBAN);
+            this.DestinationBankName.SendKeys(DestinationBankName);
+            this.DestinationCountryBank.SendKeys(DestinationCountryBank);
 
 
 
-                var selectElement2 = new SelectElement(this.DestinationCountryBank);
-                selectElement2.SelectByText(DestinationCountryBank);
+            var selectElement2 = new SelectElement(this.DestinationCountryBank);
+            selectElement2.SelectByText(DestinationCountryBank);
 
-                if ((InterBankAccountIBAN != "" && InterBankName != ""))
-                {
+            if (InterBankAccountIBAN != "" && InterBankName != "")
+            {
 
-                    this.InterBankAccountIBAN.SendKeys(InterBankAccountIBAN);
-                    this.InterBankName.SendKeys(InterBankName);
-                }
-            
+                this.InterBankAccountIBAN.SendKeys(InterBankAccountIBAN);
+                this.InterBankName.SendKeys(InterBankName);
+            }
+
         }
 
         public void ClickGenerar()
         {
-            
-                actions.MoveToElement(BtnGenerar).Click().Perform();
-                BtnYesDialog.Click();
+
+            actions.MoveToElement(BtnGenerar).Click().Perform();
+            BtnYesDialog.Click();
+
+            try
+            {
+                IWebElement IconSuccess = wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.XPath("/html/body/div[3]/div/div[1]/div[2]")));
                 BtnOkDialog.Click();
-            
+
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Error al generar el pago");
+
+            }
+
+
+
         }
 
         public void ClickBorrador()
         {
-            
-                actions.MoveToElement(BtnBorrador).Click().Perform();
-                BtnYesDialog.Click();
-                BtnOkDialog.Click();
-            
 
+            actions.MoveToElement(BtnBorrador).Click().Perform();
+            BtnYesDialog.Click();
+            BtnOkDialog.Click();
 
         }
 
