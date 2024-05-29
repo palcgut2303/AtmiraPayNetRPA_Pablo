@@ -18,7 +18,7 @@ namespace AtmiraPayNetRPA.POM
         public LoginPage(IWebDriver driver)
         {
             _driver = driver;
-            wait = new WebDriverWait(_driver, new TimeSpan(0, 0, 5));
+            wait = new WebDriverWait(_driver, new TimeSpan(0, 0, 7));
 
         }
 

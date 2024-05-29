@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,26 +11,29 @@ namespace AtmiraPayNetRPA.POM
 
     public class TableData
     {
+
+        public int PaymentId { get; set; } 
         public string BancoOrigen { get; set; }
         public string BancoBeneficiario { get; set; }
         public string Cantidad { get; set; }
         public string Divisa { get; set; }
         public string Estado { get; set; }
-        public IWebElement DownloadButton { get; set; } // Propiedad para almacenar el botón de descarga
+        public IWebElement? DownloadButton { get; set; }
 
+        public string UrlPDF { get; set; } 
     }
 
     public class ListPaymentPage
     {
-        private readonly IWebDriver driver;
-
+        private readonly IWebDriver _driver;
+        private WebDriverWait wait;
         public ListPaymentPage(IWebDriver driver)
         {
-            this.driver = driver;
-
+            this._driver = driver;
+            wait = new WebDriverWait(_driver, new TimeSpan(0, 0, 5));
         }
 
-        IWebElement btnHomeListPayment => driver.FindElement(By.Id("viewPayment"));
+        IWebElement btnHomeListPayment => wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.Id("viewPayment")));
 
         public void ClickHomebtn()
         {
@@ -40,24 +44,43 @@ namespace AtmiraPayNetRPA.POM
         {
             List<TableData> tableDatas = new List<TableData>();
 
-            var rows = driver.FindElements(By.XPath("//*[@id=\"app\"]/div/main/article/div/table/tbody/tr"));
-            
+            var rows = _driver.FindElements(By.XPath("//*[@id=\"app\"]/div/main/article/div/table/tbody/tr"));
 
             foreach (var row in rows)
             {
                 var columns = row.FindElements(By.TagName("td"));
-                var downloadButton = row.FindElement(By.TagName("button"));
+               
 
-                tableDatas.Add(new TableData
+                
+
+                if(columns[5].Text == "GENERADO")
                 {
-                    BancoOrigen = columns[0].Text,
-                    BancoBeneficiario = columns[1].Text,
-                    Cantidad = columns[2].Text,
-                    Divisa = columns[3].Text,
-                    Estado = columns[4].Text
+                    var downloadButton = columns[6].FindElement(By.TagName("button"));
+                    tableDatas.Add(new TableData
+                    {
+                        PaymentId = int.Parse(columns[0].Text),
+                        BancoOrigen = columns[1].Text,
+                        BancoBeneficiario = columns[2].Text,
+                        Cantidad = columns[3].Text,
+                        Divisa = columns[4].Text,
+                        Estado = columns[5].Text,
+                        DownloadButton = downloadButton
+                    });
+                }
+                else
+                {
+                    tableDatas.Add(new TableData
+                    {
+                        PaymentId = int.Parse(columns[0].Text),
+                        BancoOrigen = columns[1].Text,
+                        BancoBeneficiario = columns[2].Text,
+                        Cantidad = columns[3].Text,
+                        Divisa = columns[4].Text,
+                        Estado = columns[5].Text
+                    });
+                }
 
-
-                });
+                
             }
 
             return tableDatas;

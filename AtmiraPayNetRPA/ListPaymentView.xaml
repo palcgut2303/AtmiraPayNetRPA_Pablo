@@ -11,6 +11,7 @@
 
         <DataGrid Name="dataGrid" AutoGenerateColumns="False" ItemsSource="{Binding TableData}" Margin="50,93,50,143">
             <DataGrid.Columns>
+                <DataGridTextColumn Header="ID" Binding="{Binding PaymentId}" />
                 <DataGridTextColumn Header="BancoOrigen" Binding="{Binding BancoOrigen}" />
                 <DataGridTextColumn Header="BancoBeneficiario" Binding="{Binding BancoBeneficiario}" />
                 <DataGridTextColumn Header="Cantidad" Binding="{Binding Cantidad}" />
@@ -19,10 +20,24 @@
                 <DataGridTemplateColumn Header="Download">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button Content="Download PDF" Click="Button_Click(Binding btn) " />
+                            <Button Content="Download PDF" Click="Button_Click">
+                                <Button.Style>
+                                    <Style TargetType="Button">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Estado}" Value="GENERADO">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Estado}" Value="BORRADOR">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
+                            </Button>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
+                <DataGridTextColumn Header="UrlPDF" Binding="{Binding UrlPDF}" IsReadOnly="True"/>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

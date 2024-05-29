@@ -45,7 +45,7 @@
         <TextBox x:Name="txtBankNameInter" HorizontalAlignment="Left" Margin="830,272,0,0" TextWrapping="Wrap"  VerticalAlignment="Top"  Width="183" Height="40"/>
         <TextBox x:Name="txtIBANInter" HorizontalAlignment="Left" Margin="830,161,0,0" TextWrapping="Wrap"  VerticalAlignment="Top"  Width="183" Height="40"/>
         <TextBox x:Name="txtCountryDestination" HorizontalAlignment="Left" Margin="576,382,0,0" TextWrapping="Wrap"  VerticalAlignment="Top"  Width="183" Height="40"/>
-        <Button Content="Enviar Datos" HorizontalAlignment="Left" Margin="894,596,0,0" VerticalAlignment="Top" Height="56" Width="154" Click="TestData" FontSize="18"/>
+        <Button Content="Crear Pago" HorizontalAlignment="Left" Margin="894,596,0,0" VerticalAlignment="Top" Height="56" Width="154" Click="TestData" FontSize="18"/>
 
         <Label Content="TIPO DE OPERACION" HorizontalAlignment="Left" Margin="830,485,0,0" VerticalAlignment="Top"/>
         <ComboBox x:Name="comboBoxTypeOperation" HorizontalAlignment="Left" Margin="838,516,0,0" VerticalAlignment="Top" Width="166" Height="36">
@@ -67,7 +67,9 @@
         <ScrollViewer HorizontalScrollBarVisibility="Auto" Margin="114,402,824,192" Width="183" Height="123">
             <TextBlock Name="SuccessTextBlock" Foreground="Green" Visibility="Collapsed"  TextWrapping="Wrap" Text="TextBlock" Height="269" Width="173"/>
         </ScrollViewer>
-        <Button Content="Ver Lista de Pagos" HorizontalAlignment="Left" Margin="230,596,0,0" VerticalAlignment="Top" Height="56" Width="171" FontSize="20" Click="Button_Click_1"/>
+        <Button Content="Ver Lista de Pagos" HorizontalAlignment="Left" Margin="114,551,0,0" VerticalAlignment="Top" Height="56" Width="171" FontSize="20" Click="Button_Click_1"/>
+        <Label Content="Para Ver Lista de Pagos, solo rellene los campos de Inicio de Sesion." FontSize="15" HorizontalAlignment="Left" Margin="114,612,0,0" VerticalAlignment="Top" Height="45" Width="456"/>
+        <Label Content="Para Crear Pago, rellena tanto los datos de inicio de sesion como los del formulario" FontSize="15" HorizontalAlignment="Left" Margin="115,652,0,0" VerticalAlignment="Top" Height="45" Width="573"/>
 
 
     </Grid>
