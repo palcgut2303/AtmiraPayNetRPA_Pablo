@@ -114,7 +114,17 @@ namespace AtmiraPayNetRPA.POM
 
             actions.MoveToElement(BtnBorrador).Click().Perform();
             BtnYesDialog.Click();
-            BtnOkDialog.Click();
+            try
+            {
+                IWebElement IconSuccess = wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.XPath("/html/body/div[3]/div/div[1]/div[2]")));
+                BtnOkDialog.Click();
+
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Error al generar el pago");
+
+            }
 
         }
 

@@ -1,6 +1,7 @@
 ﻿using AtmiraPayNetRPA.POM;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
+using SeleniumExtras.WaitHelpers;
 using System.Net;
 using System.Net.Http;
 using System.Text;
@@ -27,18 +28,26 @@ namespace AtmiraPayNetRPA
         {
             InitializeComponent();
             
+            
         }
+
+        
+
 
         IWebElement errorOcurred => wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.XPath("//*[@id=\"app\"]/div/main/article/form/div[1]/p")));
         IWebElement errorOcurredSweetAlert => wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.XPath("//*[@id=\"swal2-html-container\"]")));
-
-
 
 
         private void TestData(object sender, RoutedEventArgs e)
         {
             try
             {
+                ErrorLabel.Visibility = Visibility.Collapsed;
+                ErrorTextBlock.Visibility = Visibility.Collapsed;
+                SuccesLabel.Visibility = Visibility.Collapsed;
+                SuccessTextBlock.Visibility = Visibility.Collapsed;
+
+
                 //TXT DEL LOGIN
                 string emailLogin = txtEmailLogin.Text;
                 string passwordLogin = txtPasswordLogin.Text;
@@ -63,15 +72,13 @@ namespace AtmiraPayNetRPA
                 string NumberStreet = txtNumberStreet.Text;
                 string PayAmount = txtPayAmount.Text;
 
-
                 _webDriver = new OpenQA.Selenium.Chrome.ChromeDriver();
+                wait = new WebDriverWait(_webDriver, new TimeSpan(0, 0, 10));
                 _webDriver.Navigate().GoToUrl("http://localhost:5058/");
                
-                _webDriver.Manage().Timeouts().ImplicitWait = System.TimeSpan.FromSeconds(5);
+                _webDriver.Manage().Timeouts().ImplicitWait = System.TimeSpan.FromSeconds(8);
 
                 _webDriver.Manage().Window.Maximize();
-
-                wait = new WebDriverWait(_webDriver, new TimeSpan(0, 0, 5));
 
                 //LOGIN
                 LoginPage loginPage = new LoginPage(_webDriver);
@@ -79,14 +86,11 @@ namespace AtmiraPayNetRPA
                 loginPage.Login(emailLogin, passwordLogin);
 
 
-
                 ListPaymentPage listPaymentPage = new ListPaymentPage(_webDriver);
                 listPaymentPage.ClickHomebtn();
 
                 CreatePaymentPage createPaymentPage = new CreatePaymentPage(_webDriver);
                 createPaymentPage.ClickCreatePayment();
-
-
 
 
                 createPaymentPage.CreatePayment(IBANBankOrigin, bankNameOrigin, countryOrigin, CP, Street, NumberStreet, PayAmount, IBANBankDestination, bankNameDestination, countryDestination, IBANBankInter, bankNameInter);
@@ -114,7 +118,14 @@ namespace AtmiraPayNetRPA
                 }
                 catch (Exception ex2)
                 {
-                    ShowError(errorOcurredSweetAlert.Text, ex);
+                    try
+                    {
+                        ShowError(errorOcurredSweetAlert.Text, ex);
+                    }catch (Exception ex3)
+                    {
+                        ShowError("Error", ex);
+                    }
+
                 }
             }
         }
@@ -148,30 +159,50 @@ namespace AtmiraPayNetRPA
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            //TXT DEL LOGIN
-            string emailLogin = txtEmailLogin.Text;
-            string passwordLogin = txtPasswordLogin.Text;
+            try
+            {
+                ErrorLabel.Visibility = Visibility.Collapsed;
+                ErrorTextBlock.Visibility = Visibility.Collapsed;
+                SuccesLabel.Visibility = Visibility.Collapsed;
+                SuccessTextBlock.Visibility = Visibility.Collapsed;
 
-            _webDriver = new OpenQA.Selenium.Chrome.ChromeDriver();
-            _webDriver.Navigate().GoToUrl("http://localhost:5058/");
+                //TXT DEL LOGIN
+                string emailLogin = txtEmailLogin.Text;
+                string passwordLogin = txtPasswordLogin.Text;
 
-            _webDriver.Manage().Timeouts().ImplicitWait = System.TimeSpan.FromSeconds(5);
+                _webDriver = new OpenQA.Selenium.Chrome.ChromeDriver();
+                _webDriver.Navigate().GoToUrl("http://localhost:5058/");
 
-            _webDriver.Manage().Window.Maximize();
+                _webDriver.Manage().Timeouts().ImplicitWait = System.TimeSpan.FromSeconds(5);
 
-            wait = new WebDriverWait(_webDriver, new TimeSpan(0, 0, 5));
+                _webDriver.Manage().Window.Maximize();
 
-            //LOGIN
-            LoginPage loginPage = new LoginPage(_webDriver);
-            loginPage.ClickLogin();
-            loginPage.Login(emailLogin, passwordLogin);
+                wait = new WebDriverWait(_webDriver, new TimeSpan(0, 0, 8));
 
-            ListPaymentPage listPaymentPage = new ListPaymentPage(_webDriver);
-            listPaymentPage.ClickHomebtn();
+                //LOGIN
+                LoginPage loginPage = new LoginPage(_webDriver);
+                loginPage.ClickLogin();
+                loginPage.Login(emailLogin, passwordLogin);
 
-            ListPaymentView listPaymentPage2 = new(_webDriver);
-            listPaymentPage2.Show();
-            Close();
+                ListPaymentPage listPaymentPage = new ListPaymentPage(_webDriver);
+                listPaymentPage.ClickHomebtn();
+
+                ListPaymentView listPaymentPage2 = new(_webDriver);
+                listPaymentPage2.Show();
+                Close();
+            }
+            catch (Exception ex)
+            {
+                try
+                {
+                    ShowError(errorOcurred.Text, ex);
+                }
+                catch (Exception ex2)
+                {
+                    ShowError("Error", ex);
+                }
+            }
+            
 
         }
     }

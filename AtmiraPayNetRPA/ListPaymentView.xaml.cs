@@ -41,7 +41,18 @@ namespace AtmiraPayNetRPA
 
             List<TableData> tableData = ListPayment.GetTableDatas();
 
-            dataGrid.ItemsSource = tableData;
+            if(tableData.Count() != 0)
+            {
+                dataGrid.ItemsSource = tableData;
+            }
+            else {
+                tableData = new List<TableData>
+                {
+                    new TableData { PaymentId = 0, DownloadButton = null, UrlPDF = "", BancoOrigen = "No hay registros", BancoBeneficiario = "No hay registros", Cantidad = "0",Divisa = "No hay registro",Estado = "No hay registros"  }
+                };
+                dataGrid.ItemsSource = tableData;
+            }
+            
 
         }
 
@@ -57,42 +68,47 @@ namespace AtmiraPayNetRPA
 
                 if (dataContext is TableData data)
                 {
+                    var idCheck = data.PaymentId;
 
-                    var WebElement = data.DownloadButton;
-                    var id = data.PaymentId;
-
-                    WebElement.Click();
-
-                    System.Threading.Thread.Sleep(5000);
-
-                    string downloadPath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\\Downloads";
-                    string fileName = "CartaDePago_" + data.PaymentId + ".pdf";
-
-                    string filePath = Path.Combine(downloadPath, fileName);
-
-
-                    if (File.Exists(filePath))
+                    if (idCheck != 0)
                     {
-                        MessageBox.Show($"PDF descargado en: {filePath}", "Éxito", MessageBoxButton.OK, MessageBoxImage.Information);
+                        var WebElement = data.DownloadButton;
+                        var id = data.PaymentId;
 
-                        try
+                        WebElement.Click();
+
+                        System.Threading.Thread.Sleep(5000);
+
+                        string downloadPath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\\Downloads";
+                        string fileName = "CartaDePago_" + data.PaymentId + ".pdf";
+
+                        string filePath = Path.Combine(downloadPath, fileName);
+
+
+                        if (File.Exists(filePath))
                         {
-                            
-                            data.UrlPDF = filePath;
+                            MessageBox.Show($"PDF descargado en: {filePath}", "Éxito", MessageBoxButton.OK, MessageBoxImage.Information);
 
-                            dataGrid.Items.Refresh();
+                            try
+                            {
 
-                            Process.Start(new ProcessStartInfo(filePath) { UseShellExecute = true });
+                                data.UrlPDF = filePath;
+
+                                dataGrid.Items.Refresh();
+
+                                Process.Start(new ProcessStartInfo(filePath) { UseShellExecute = true });
+                            }
+                            catch (Exception ex)
+                            {
+                                MessageBox.Show($"No se pudo abrir el archivo PDF: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                            }
                         }
-                        catch (Exception ex)
+                        else
                         {
-                            MessageBox.Show($"No se pudo abrir el archivo PDF: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                            MessageBox.Show("No se encontró el archivo descargado.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                         }
                     }
-                    else
-                    {
-                        MessageBox.Show("No se encontró el archivo descargado.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                    }
+                    
 
                 }
             }

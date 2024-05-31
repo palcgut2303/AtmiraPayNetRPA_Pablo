@@ -50,35 +50,42 @@ namespace AtmiraPayNetRPA.POM
             {
                 var columns = row.FindElements(By.TagName("td"));
                
-
-                
-
-                if(columns[5].Text == "GENERADO")
+                if(columns.Count == 0)
                 {
-                    var downloadButton = columns[6].FindElement(By.TagName("button"));
-                    tableDatas.Add(new TableData
-                    {
-                        PaymentId = int.Parse(columns[0].Text),
-                        BancoOrigen = columns[1].Text,
-                        BancoBeneficiario = columns[2].Text,
-                        Cantidad = columns[3].Text,
-                        Divisa = columns[4].Text,
-                        Estado = columns[5].Text,
-                        DownloadButton = downloadButton
-                    });
+                    return null;
                 }
                 else
                 {
-                    tableDatas.Add(new TableData
+                    if (columns[5].Text == "GENERADO")
                     {
-                        PaymentId = int.Parse(columns[0].Text),
-                        BancoOrigen = columns[1].Text,
-                        BancoBeneficiario = columns[2].Text,
-                        Cantidad = columns[3].Text,
-                        Divisa = columns[4].Text,
-                        Estado = columns[5].Text
-                    });
+                        var downloadButton = columns[6].FindElement(By.TagName("button"));
+                        tableDatas.Add(new TableData
+                        {
+                            PaymentId = int.Parse(columns[0].Text),
+                            BancoOrigen = columns[1].Text,
+                            BancoBeneficiario = columns[2].Text,
+                            Cantidad = columns[3].Text,
+                            Divisa = columns[4].Text,
+                            Estado = columns[5].Text,
+                            DownloadButton = downloadButton
+                        });
+                    }
+                    else
+                    {
+                        tableDatas.Add(new TableData
+                        {
+                            PaymentId = int.Parse(columns[0].Text),
+                            BancoOrigen = columns[1].Text,
+                            BancoBeneficiario = columns[2].Text,
+                            Cantidad = columns[3].Text,
+                            Divisa = columns[4].Text,
+                            Estado = columns[5].Text
+                        });
+                    }
                 }
+                
+
+                
 
                 
             }

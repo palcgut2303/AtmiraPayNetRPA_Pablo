@@ -5,14 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AtmiraPayNetRPA"
         mc:Ignorable="d"
-        Title="MainWindow" Height="733" Width="1045">
-    <Grid Margin="-76,10,0,-10">
+        Title="MainWindow" Height="733" Width="1083">
+    <Grid Margin="-1,0,1,-6">
 
 
-        <Label Content="Email" HorizontalAlignment="Left" Margin="115,106,0,0" VerticalAlignment="Top" Height="49" Width="75" FontSize="24"/>
-        <Label Content="Password" HorizontalAlignment="Left" Margin="115,233,0,0" VerticalAlignment="Top" Height="49" Width="115" FontSize="24"/>
-        <TextBox x:Name="txtEmailLogin" HorizontalAlignment="Left" Margin="114,154,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="184" Height="40"/>
-        <TextBox x:Name="txtPasswordLogin" HorizontalAlignment="Left" Margin="115,280,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="183" Height="40" />
+        <Label Content="Email" HorizontalAlignment="Left" Margin="34,95,0,0" VerticalAlignment="Top" Height="49" Width="75" FontSize="24"/>
+        <Label Content="Password" HorizontalAlignment="Left" Margin="34,200,0,0" VerticalAlignment="Top" Height="49" Width="115" FontSize="24"/>
+        <TextBox x:Name="txtEmailLogin" HorizontalAlignment="Left" Margin="34,141,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="184" Height="40"/>
+        <TextBox x:Name="txtPasswordLogin" HorizontalAlignment="Left" Margin="35,254,0,423" TextWrapping="Wrap" Width="183" />
 
         <Label Content="Creacion de PAGO" HorizontalAlignment="Left" Margin="538,0,0,0" VerticalAlignment="Top" Height="49" Width="268" FontSize="30" FontWeight="Bold" RenderTransformOrigin="0.5,0.5" />
         <Label Content="IBAN ORIGEN" HorizontalAlignment="Left" Margin="318,123,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" >
@@ -28,15 +28,15 @@
         <Label Content="IBAN INTERMEDIARIO" HorizontalAlignment="Left" Margin="830,131,0,0" VerticalAlignment="Top"/>
         <Label Content="NOMBRE DEL BANCO INTERMEDIARIO" HorizontalAlignment="Left" Margin="830,238,0,0" VerticalAlignment="Top" />
 
-        <Label Content="CP" HorizontalAlignment="Left" Margin="339,446,0,0" VerticalAlignment="Top"/>
-        <Label Content="NUMERO DE CALLE" HorizontalAlignment="Left" Margin="830,389,0,0" VerticalAlignment="Top"/>
-        <Label Content="CALLE" HorizontalAlignment="Left" Margin="576,454,0,0" VerticalAlignment="Top"/>
+        <Label Content="CP" HorizontalAlignment="Left" Margin="444,469,0,0" VerticalAlignment="Top"/>
+        <Label Content="NUMERO DE CALLE" HorizontalAlignment="Left" Margin="865,389,0,0" VerticalAlignment="Top"/>
+        <Label Content="CALLE" HorizontalAlignment="Left" Margin="646,466,0,0" VerticalAlignment="Top"/>
 
-        <Label Content="CANTIDAD" HorizontalAlignment="Left" Margin="664,581,0,0" VerticalAlignment="Top"/>
+        <Label Content="CANTIDAD" HorizontalAlignment="Left" Margin="730,581,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="txtIBANOrigin" HorizontalAlignment="Left" Margin="318,154,0,0" TextWrapping="Wrap"  VerticalAlignment="Top"  Width="183" Height="40" />
         <TextBox x:Name="txtBankNameOrigin" HorizontalAlignment="Left" Margin="318,272,0,0" TextWrapping="Wrap"  VerticalAlignment="Top"  Width="183" Height="40"/>
         <TextBox x:Name="txtCountryOrigin" HorizontalAlignment="Left" Margin="318,382,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="183" Height="40"/>
-        <TextBox x:Name="txtCp" HorizontalAlignment="Left" Margin="324,485,0,0" TextWrapping="Wrap"  VerticalAlignment="Top"  Width="184" Height="40"/>
+        <TextBox x:Name="txtCp" HorizontalAlignment="Left" Margin="364,498,0,0" TextWrapping="Wrap"  VerticalAlignment="Top"  Width="184" Height="40"/>
         <TextBox x:Name="txtStreet" HorizontalAlignment="Left" Margin="576,492,0,0" TextWrapping="Wrap"  VerticalAlignment="Top"  Width="183" Height="40"/>
         <TextBox x:Name="txtNumberStreet" HorizontalAlignment="Left" Margin="830,420,0,0" TextWrapping="Wrap"  VerticalAlignment="Top"  Width="184" Height="40"/>
         <TextBox x:Name="txtPayAmount" HorizontalAlignment="Left" Margin="672,612,0,0" TextWrapping="Wrap"  VerticalAlignment="Top"  Width="184" Height="40"/>
@@ -45,9 +45,9 @@
         <TextBox x:Name="txtBankNameInter" HorizontalAlignment="Left" Margin="830,272,0,0" TextWrapping="Wrap"  VerticalAlignment="Top"  Width="183" Height="40"/>
         <TextBox x:Name="txtIBANInter" HorizontalAlignment="Left" Margin="830,161,0,0" TextWrapping="Wrap"  VerticalAlignment="Top"  Width="183" Height="40"/>
         <TextBox x:Name="txtCountryDestination" HorizontalAlignment="Left" Margin="576,382,0,0" TextWrapping="Wrap"  VerticalAlignment="Top"  Width="183" Height="40"/>
-        <Button Content="Crear Pago" HorizontalAlignment="Left" Margin="894,596,0,0" VerticalAlignment="Top" Height="56" Width="154" Click="TestData" FontSize="18"/>
+        <Button Content="Crear Pago" HorizontalAlignment="Left" Margin="870,597,0,0" VerticalAlignment="Top" Height="56" Width="154" Click="TestData" FontSize="18"/>
 
-        <Label Content="TIPO DE OPERACION" HorizontalAlignment="Left" Margin="830,485,0,0" VerticalAlignment="Top"/>
+        <Label Content="TIPO DE OPERACION" HorizontalAlignment="Left" Margin="860,485,0,0" VerticalAlignment="Top"/>
         <ComboBox x:Name="comboBoxTypeOperation" HorizontalAlignment="Left" Margin="838,516,0,0" VerticalAlignment="Top" Width="166" Height="36">
             <ComboBoxItem Content="GENERAR"/>
             <ComboBoxItem Content="BORRADOR"/>
@@ -58,19 +58,18 @@
         <Rectangle HorizontalAlignment="Left" Height="374" Margin="575,67,0,0" Stroke="Black" VerticalAlignment="Top" Width="206"/>
         <Rectangle HorizontalAlignment="Left" Height="375" Margin="318,66,0,0" Stroke="Black" VerticalAlignment="Top" Width="207"/>
         <Rectangle HorizontalAlignment="Left" Height="295" Margin="830,67,0,0" Stroke="Black" VerticalAlignment="Top" Width="216" RenderTransformOrigin="0.478,0.524"/>
-        <Label Content="Inicio de Sesión" HorizontalAlignment="Left" Margin="114,67,0,0" VerticalAlignment="Top" Width="172" FontSize="22" FontWeight="Bold"/>
-        <Label Name="ErrorLabel" Content="An error occurred!" Foreground="Red" Visibility="Collapsed"   HorizontalAlignment="Left" VerticalAlignment="Top" Margin="147,359,0,0"/>
-        <Label Name="SuccesLabel" Content="Completed Test!" Foreground="Green" Visibility="Collapsed"   HorizontalAlignment="Left" VerticalAlignment="Top" Margin="147,359,0,0"/>
-        <ScrollViewer   HorizontalScrollBarVisibility="Auto" Margin="114,402,824,192" Width="183" Height="123">
-            <TextBlock Name="ErrorTextBlock" Foreground="Red" Visibility="Collapsed"  TextWrapping="Wrap" Text="TextBlock" Height="269" Width="173"/>
+        <Label Content="Inicio de Sesión" HorizontalAlignment="Left" Margin="34,62,0,0" VerticalAlignment="Top" Width="172" FontSize="22" FontWeight="Bold"/>
+        <Label Name="ErrorLabel" Content="An error occurred!" Foreground="Red"  Visibility="Collapsed"  HorizontalAlignment="Left" VerticalAlignment="Top" Margin="67,354,0,0"/>
+        <Label Name="SuccesLabel" Content="Completed Test!" Foreground="Green"  Visibility="Collapsed"  HorizontalAlignment="Left" VerticalAlignment="Top" Margin="72,362,0,0"/>
+        <ScrollViewer   HorizontalScrollBarVisibility="Auto"  Margin="49,407,792,193" Height="123">
+            <TextBlock Name="ErrorTextBlock" Foreground="Red"  Visibility="Collapsed" TextWrapping="Wrap" Text="TextBlock" Height="269" Width="173"/>
         </ScrollViewer>
-        <ScrollViewer HorizontalScrollBarVisibility="Auto" Margin="114,402,824,192" Width="183" Height="123">
+        <ScrollViewer HorizontalScrollBarVisibility="Auto" Margin="49,411,792,189" Height="123">
             <TextBlock Name="SuccessTextBlock" Foreground="Green" Visibility="Collapsed"  TextWrapping="Wrap" Text="TextBlock" Height="269" Width="173"/>
         </ScrollViewer>
-        <Button Content="Ver Lista de Pagos" HorizontalAlignment="Left" Margin="114,551,0,0" VerticalAlignment="Top" Height="56" Width="171" FontSize="20" Click="Button_Click_1"/>
-        <Label Content="Para Ver Lista de Pagos, solo rellene los campos de Inicio de Sesion." FontSize="15" HorizontalAlignment="Left" Margin="114,612,0,0" VerticalAlignment="Top" Height="45" Width="456"/>
-        <Label Content="Para Crear Pago, rellena tanto los datos de inicio de sesion como los del formulario" FontSize="15" HorizontalAlignment="Left" Margin="115,652,0,0" VerticalAlignment="Top" Height="45" Width="573"/>
-
+        <Button Content="Ver Lista de Pagos" HorizontalAlignment="Left" Margin="49,551,0,0" VerticalAlignment="Top" Height="56" Width="171" FontSize="20" Click="Button_Click_1"/>
+        <Label Content="Para Ver Lista de Pagos, solo rellene los campos de Inicio de Sesion." FontSize="15" HorizontalAlignment="Left" Margin="49,624,0,0" VerticalAlignment="Top" Height="45" Width="456" FontStyle="Italic"/>
+        <Label Content="Para Crear Pago, rellena tanto los datos de inicio de sesion como los del formulario" FontSize="15" HorizontalAlignment="Left" Margin="49,668,0,0" VerticalAlignment="Top" Height="45" Width="573" FontStyle="Italic"/>
 
     </Grid>
 </Window>
