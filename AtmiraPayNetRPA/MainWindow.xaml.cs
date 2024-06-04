@@ -31,9 +31,6 @@ namespace AtmiraPayNetRPA
             
         }
 
-        
-
-
         IWebElement errorOcurred => wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.XPath("//*[@id=\"app\"]/div/main/article/form/div[1]/p")));
         IWebElement errorOcurredSweetAlert => wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.XPath("//*[@id=\"swal2-html-container\"]")));
 
